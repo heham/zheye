@@ -109,7 +109,8 @@ def predict_result(filename):
     return the upsite down character indexes.
     '''
     
-    device = torch.device("cuda")
+    #device = torch.device("cuda")
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     data, indexes = CAPTCHA_to_data(filename)
     inputs = torch.from_numpy(data.reshape(7, 1, 40, 40)).to(device)
