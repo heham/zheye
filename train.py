@@ -144,7 +144,8 @@ def main():
     training_data = generate_labeled_data(training_batch, batch_size)
     testing_data = generate_labeled_data(testing_batch, batch_size)
 
-    device = torch.device("cuda")
+    #device = torch.device("cuda")
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     net = Net().to(device)
 
     criterion = nn.CrossEntropyLoss()
@@ -159,6 +160,7 @@ def main():
 
             inputs = torch.from_numpy(inputs.reshape(batch_size,1,40,40))
             labels = torch.from_numpy(labels)
+            labels=labels.long()
 
             inputs = inputs.to(device)
             labels = labels.to(device)
